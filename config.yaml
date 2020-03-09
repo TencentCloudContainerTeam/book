@@ -1,0 +1,53 @@
+baseURL: "https://k8s.imroc.io/"
+languageCode: zh
+defaultContentLanguage: zh
+title: "腾讯云容器服务"
+theme: "hugo-theme-learn"
+metaDataFormat: "yaml"
+defaultContentLanguageInSubdir: false
+
+params:
+  description: "腾讯云容器服务"
+  author: "roc"
+  showVisitedLinks: true
+  disableBreadcrumb: false
+  disableNextPrev: false
+  themeVariant: mine
+  ordersectionsby: weight
+  cdn: false
+  gitcomment:
+    owner: "TencentCloudContainerTeam"
+    repo: "book"
+    clientId: "4e9444088ec088b58f37"
+    clientSecret: "b8faa4be9753a13d0b01ccdf4ccc015f9983b58c"
+  algolia:
+    index: "kubetencent-book-zh"
+    key: "5b4678e9995fe4211c4fa43ad2ffdab5"
+    appID: "B6Q6PSGUV5"
+
+outputs:
+  home: [ "HTML", "RSS", "JSON"]
+
+languages:
+  zh:
+    editURL: "https://github.com/TencentCloudContainerTeam/book/edit/master/content/zh/"
+    weight: 1
+    contentDir: content/zh
+    languageName: 简体中文
+    dateFormat: "2006-01-02"
+    menu:
+    - shortcuts:
+        name: "<i class='fab fa-fw fa-github'></i> GitHub 仓库"
+        identifier: "ds"
+        url: "https://github.com/TencentCloudContainerTeam/book"
+        weight: 10
+  en:
+    weight: 2
+    contentDir: content/en
+    languageName: English
+    menu:
+    - shortcuts:
+        name: "<i class='fab fa-fw fa-github'></i> GitHub Repo"
+        identifier: "ds"
+        url: "https://github.com/TencentCloudContainerTeam/book"
+        weight: 10
