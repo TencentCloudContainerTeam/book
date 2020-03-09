@@ -1,4 +1,4 @@
-baseURL: "http://book.kubetencent.io"
+baseURL: "https://book.kubetencent.io"
 languageCode: zh
 defaultContentLanguage: zh
 title: "腾讯云容器服务"
