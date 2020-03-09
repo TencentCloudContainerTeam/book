@@ -1,4 +1,4 @@
-baseURL: "https://tencentcloudcontainerteam.github.io/book"
+baseURL: "http://book.kubetencent.io"
 languageCode: zh
 defaultContentLanguage: zh
 title: "腾讯云容器服务"
