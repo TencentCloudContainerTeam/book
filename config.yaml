@@ -1,4 +1,4 @@
-baseURL: "https://k8s.imroc.io/"
+baseURL: "https://tencentcloudcontainerteam.github.io/book"
 languageCode: zh
 defaultContentLanguage: zh
 title: "腾讯云容器服务"
