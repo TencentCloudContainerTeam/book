@@ -7,7 +7,7 @@ all: index
 
 .PHONY: index
 index:
-	script/update-index.sh
+	script/update-index.sh zh
 
 .PHONY: build
 build:

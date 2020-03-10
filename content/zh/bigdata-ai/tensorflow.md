@@ -1,5 +1,5 @@
 ---
-title: "TensorFlow"
+title: "TensorFlow on TKE/EKS"
 state: Alpha
 ---
 
