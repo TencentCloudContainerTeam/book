@@ -2,7 +2,6 @@
 title: "腾讯云容器服务"
 ---
 
-
 ## 在线阅读
 
 地址: https://book.kubetencent.io
@@ -14,10 +13,6 @@ title: "腾讯云容器服务"
 ## 项目源码
 
 项目源码存放于 Github 上: https://github.com/TencentCloudContainerTeam/book
-
-## 贡献
-
-欢迎参与贡献和完善内容，贡献方法参考 [CONTRIBUTING](https://github.com/TencentCloudContainerTeam/book/blob/master/CONTRIBUTING.md)
 
 ## License
 

@@ -8,7 +8,7 @@ defaultContentLanguageInSubdir: false
 
 params:
   description: "腾讯云容器服务"
-  author: "roc"
+  author: "腾讯云容器架构师团队"
   showVisitedLinks: true
   disableBreadcrumb: false
   disableNextPrev: false
@@ -16,7 +16,7 @@ params:
   ordersectionsby: weight
   cdn: false
   gitcomment:
-    owner: "TencentCloudContainerTeam"
+    owner: "imroc"
     repo: "book"
     clientId: "4e9444088ec088b58f37"
     clientSecret: "b8faa4be9753a13d0b01ccdf4ccc015f9983b58c"
