@@ -10,7 +10,7 @@
       clientSecret: '{{.Site.Params.Gitcomment.clientSecret}}',
       repo: '{{.Site.Params.Gitcomment.repo}}',
       owner: '{{.Site.Params.Gitcomment.owner}}',
-      admin: '{{.Site.Params.Gitcomment.owner}}',
+      admin: ["{{ delimit .Site.Params.Gitcomment.admin "\", \"" }}"],
       labels: ['Gitalk'],
       title: '{{ .Title }}',
       createIssueManually: false,

@@ -16,8 +16,9 @@ params:
   ordersectionsby: weight
   cdn: false
   gitcomment:
-    owner: "imroc"
+    owner: "TencentCloudContainerTeam"
     repo: "book"
+    admin: ["imroc", "coderwangke"]
     clientId: "4e9444088ec088b58f37"
     clientSecret: "b8faa4be9753a13d0b01ccdf4ccc015f9983b58c"
   algolia:
