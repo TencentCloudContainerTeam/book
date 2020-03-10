@@ -15,6 +15,9 @@ params:
   themeVariant: mine
   ordersectionsby: weight
   cdn: false
+  logo:
+    text: "腾讯云容器服务指南"
+    image: "https://res.cloudinary.com/imroc/image/upload/c_scale,w_64/v1583293443/kubernetes-practice-guide/img/kubernetes.png"
   gitcomment:
     owner: "TencentCloudContainerTeam"
     repo: "book"

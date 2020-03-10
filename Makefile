@@ -2,21 +2,13 @@
 SHELL          := /bin/bash
 
 
-# .PHONY: all
-# linux: build_linux
+.PHONY: all
+all: index
 
 .PHONY: index
 index:
 	script/update-index.sh
-	
-.PHONY: index_zh
-index_zh:
-	script/update-index.sh zh
 
-.PHONY: index_en
-index_en:
-	script/update-index.sh en
-
-.PHONY: update
-update:
-	script/deploy.sh
+.PHONY: build
+build:
+	hugo
