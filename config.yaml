@@ -28,6 +28,8 @@ params:
     index: "kubetencent-book-zh"
     key: "5b4678e9995fe4211c4fa43ad2ffdab5"
     appID: "B6Q6PSGUV5"
+  github:
+    repo: "TencentCloudContainerTeam/book"
 
 outputs:
   home: [ "HTML", "RSS", "JSON"]
