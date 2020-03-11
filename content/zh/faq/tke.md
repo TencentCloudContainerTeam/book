@@ -50,6 +50,6 @@ Error from server (NotFound): the server could not find the requested resource
 
 这是因为 metrics api 的 apiservice 指向的 TKE 自带的 hpa-metrics-server，而 hpa-metrics-server 不支持 node 相关的指标，hpa-metrics-server 主要用于 HPA 功能(Pod 横向自动伸缩)，伸缩判断指标最开始使用的 metrics api，后来改成了 custom metrics api。
 
-`kubectl top nodes` 是请求的 metrics api，由于 TKE 控制台的 HPA 功能不依赖 metrics api 了，可以自行修改其 apiservice 的指向为自建的 metrics server，比如最简单的官方开源的 [https://github.com/kubernetes-sigs/metrics-server](https://github.com/kubernetes-sigs/metrics-server)，参考 [在 TKE 中安装 metrics-server](../../adnon/install-metrics-server-on-tke.md)，或者如果你集群中使用 prometheus，可以安装 [k8s-prometheus-adapter](https://github.com/DirectXMan12/k8s-prometheus-adapter) 来适配 metrics api，也可以直接部署 [kube-prometheus](https://github.com/coreos/kube-prometheus) 安装更全面的 prometheus on kubernetes 全家桶套件。
+`kubectl top nodes` 是请求的 metrics api，由于 TKE 控制台的 HPA 功能不依赖 metrics api 了，可以自行修改其 apiservice 的指向为自建的 metrics server，比如最简单的官方开源的 [metrics-server](https://github.com/kubernetes-sigs/metrics-server)，参考 [在 TKE 中安装 metrics-server](../../andon/install-metrics-server-on-tke/)，或者如果你集群中使用 prometheus，可以安装 [k8s-prometheus-adapter](https://github.com/DirectXMan12/k8s-prometheus-adapter) 来适配 metrics api，也可以直接部署 [kube-prometheus](https://github.com/coreos/kube-prometheus) 安装更全面的 prometheus on kubernetes 全家桶套件。
 
 不管怎样，最后确保 `v1beta1.metrics.k8s.io` 这个 apiservice 指向了你自己的 metrics api 适配服务，通过 `kubectl -n kube-system edit apiservice v1beta1.metrics.k8s.io` 可以修改。
