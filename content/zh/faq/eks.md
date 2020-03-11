@@ -134,9 +134,13 @@ spec:
 
 #### 如何正确创建service
 
-service 只支持headless service和loadbalancer类型的service，如果spec.ClusterIP != None 并且 spec.type != LoadBalancer，返回403 Forbidden错误
+service 已支持以下类型的service
 
-VPC内网访问 需要加如下的annotation: service.kubernetes.io/qcloud-loadbalancer-internal-subnetid: subnet-xxxxxx
+- ClusterIP 用于同一集群内的其他服务或容器访问，支持TCP/UDP协议，支持设置ClientIP: none（headless service）
+- Loadbalancer 用于集群外的服务访问，支持TCP/UDP协议
+
+
+注意: VPC内网访问 需要设置如下的annotation: service.kubernetes.io/qcloud-loadbalancer-internal-subnetid: subnet-xxxxxx
 
 ```yaml
 # loadbalancer
@@ -160,7 +164,26 @@ spec:
   type: LoadBalancer
 
 ---
+# ClusterIP service
 
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  namespace: default
+spec:
+  ports:
+  - name: tcp-80-80
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    k8s-app: nginx
+    qcloud-app: nginx
+  sessionAffinity: None
+  type: ClusterIP
+
+---
 # headless service
 
 apiVersion: v1
