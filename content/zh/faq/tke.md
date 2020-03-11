@@ -2,7 +2,7 @@
 title: "TKE 常见问题"
 ---
 
-## 为什么挂载的 CFS 容量是 10G
+##### 为什么挂载的 CFS 容量是 10G
 
 创建负载的时候可以挂载 NFS，如果使用 CFS 提供的 NFS 服务，当 NFS 被挂载好去查看实际容量时发现是 10G。
 
@@ -12,7 +12,7 @@ cfs 扩容方式: 小于1T，容量到50%触发自动扩容，每次加100G; 大
 
 cfs 收费方式: 计费是根据实际的使用量，小于10G不收费，多于10G开始收费
 
-## 为什么 controller-manager 和 scheduler 状态显示 Unhealthy
+##### 为什么 controller-manager 和 scheduler 状态显示 Unhealthy
 
 ``` bash
 kubectl get cs
@@ -40,7 +40,7 @@ func (s componentStatusStorage) serversToValidate() map[string]*componentstatus.
 - https://github.com/kubernetes/kubernetes/issues/19570
 - https://github.com/kubernetes/enhancements/issues/553
 
-## 为什么 kubectl top nodes 不行
+##### 为什么 kubectl top nodes 不行
 
 执行 `kubectl top nodes` 报 NotFound:
 ``` bash
