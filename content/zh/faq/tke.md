@@ -53,3 +53,7 @@ Error from server (NotFound): the server could not find the requested resource
 `kubectl top nodes` 是请求的 metrics api，由于 TKE 控制台的 HPA 功能不依赖 metrics api 了，可以自行修改其 apiservice 的指向为自建的 metrics server，比如最简单的官方开源的 [metrics-server](https://github.com/kubernetes-sigs/metrics-server)，参考 [在 TKE 中安装 metrics-server](../../andon/install-metrics-server-on-tke/)，或者如果你集群中使用 prometheus，可以安装 [k8s-prometheus-adapter](https://github.com/DirectXMan12/k8s-prometheus-adapter) 来适配 metrics api，也可以直接部署 [kube-prometheus](https://github.com/coreos/kube-prometheus) 安装更全面的 prometheus on kubernetes 全家桶套件。
 
 不管怎样，最后确保 `v1beta1.metrics.k8s.io` 这个 apiservice 指向了你自己的 metrics api 适配服务，通过 `kubectl -n kube-system edit apiservice v1beta1.metrics.k8s.io` 可以修改。
+
+##### 我从 TKE 集群所在 VPC 之外有办法能直接访问容器 IP 吗
+
+如果你的网络已经通过专线、对等连接、云联网或 VPN 等方式跟 TKE 集群所在 VPC 做了打通，可以参考 [容器路由互通](../../network/container-route/) 来进一步打通容器路由。
