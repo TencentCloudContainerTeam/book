@@ -6,6 +6,10 @@ theme: "hugo-theme-learn"
 metaDataFormat: "yaml"
 defaultContentLanguageInSubdir: false
 
+markup:
+  tableOfContents:
+    endLevel: 6
+
 params:
   description: "腾讯云容器服务"
   author: "腾讯云容器架构师团队"
