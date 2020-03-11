@@ -3,15 +3,15 @@ title: "EKS 常见问题"
 state: Alpha
 ---
 
-## EKS 支持 hostPath 吗
+### EKS 支持 hostPath 吗
 
 不支持。serverless，没有 node，也就没有 hostPath
 
-## EKS 支持 kubectl exec -it 来登录容器吗
+### EKS 支持 kubectl exec -it 来登录容器吗
 
 在灰度，需要开白名单，请提工单或联系售后开白。
 
-## EKS 如何让所有 pod 时区保持一致
+### EKS 如何让所有 pod 时区保持一致
 
 由于不支持 hostPath，所以不能用此方法来挂载时区文件，可以通过挂载 configmap 来实现。
 
