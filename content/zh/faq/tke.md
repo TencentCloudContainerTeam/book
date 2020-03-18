@@ -57,3 +57,52 @@ Error from server (NotFound): the server could not find the requested resource
 ##### 我从 TKE 集群所在 VPC 之外有办法能直接访问容器 IP 吗
 
 如果你的网络已经通过专线、对等连接、云联网或 VPN 等方式跟 TKE 集群所在 VPC 做了打通，可以参考 [容器路由互通](../../network/container-route/) 来进一步打通容器路由。
+
+##### TKE中的容器和IDC自建k8s中的容器网络可以互通么？
+
+这个问题分两种情况，分别说明：
+（1） IDC k8s 中的容器访问TKE 中的容器。
+完全可以，tke 的容器网络默认是基于全局路由的模式，IDC 和 腾讯云拉通专线（或者接入云联网）后，只要将TKE 集群的容器路由下发到IDC 的网关，就可以实现访问。
+
+（2） TKE 的容器访问IDC k8s 中的容器。
+不一定：要看自建k8s 集群使用的网络模式，能否把容器路由发布到腾讯云的网关。
+如果自建k8s 使用使用3层路由（如calico 的bgp模式），或者大二层（如macvlan）的模式网络模式，则可以将容器路由发布到云上，实现访问。
+如果自建k8s 使用隧道网络模式（如flannel 或者calico 的ipip 模式），无法将路由发布出来，则无法访问。
+
+##### IDC 集群是否可以纳管云上的cvm 么？
+
+理论上可行，但不建议这么做，建议使用多集群方案，主要有以下几个原因：
+1. IDC和云上cvm 依赖专线或者云联网互通，网络抖动和延迟都会对集群管理带来影响。
+2. IDC的网络环境和云上不一样，需要根据实际情况选择合适的网络插件，导致IDC 和 云上的网络插件不一致，使容器网络的管理复杂度增高：
+3. 目前还没有这样的客户案例，未经过生产验证，风险较高。
+4. 通过多集群来避免但集群故障，使用原生fedration 或者 一些开源工具（如rancher）来管理多集群也很方便。 
+
+##### 在TKE Pod 中为什么无法访问到公网？
+在TKE 中，podip 首先snat 成nodeip, 然后通过nodeip 出公网。
+podip snat 成nodeip 是通过k8s 组件 ip-masq-agent  修改iptables 规则来实现的。
+TKE  默认 ip-masq-agent-config 配置在vpc 内不做snat, vpc 之外都做snat. 
+
+所以如果pod 无法访问公网，需要分两种情况检查以下配置：
+1. 如果node可以访问公网； 
+检查ip-masq-agent-config 配置，podip 出公网时是否做了snat 。
+2. 如果node 不可以访问公网
+1)  检查/etc/resolv.conf ，看nameserver 配置是否正确，腾讯云主机默认nameserver如下：
+   nameserver 183.60.83.19
+   nameserver 183.60.82.98  
+2)  如果域名解析没有问题，那就应该是公网ip 或者nat网关的问题，联系相关同事排查。
+
+##### cfs挂载在pod下的时候root权限，我的pod启动是普通用户，没法写入cfs，怎么解决，你们有什么方案吗?
+https://cloud.tencent.com/document/product/582/10951 
+
+如cfs 文档所示，默认情况下文件系统的权限是755， 只有root 用户有写权限。
+如果非root 用户要写，那么有两种情况：
+1. 非root 用户在root 组，要求文件系统的权限为 775 (rwxrwxr-x)
+2. 非root 用户不在root 组，要求文件系统权限为 777 (rwxrwxrwx)
+总之用户要有对应的写权限。
+
+具体如何改文件系统权限，可以咨询下cfs 的同事。
+一种做法是：将nfs 挂载到本地，通过chmod 来改。
+
+
+
+
