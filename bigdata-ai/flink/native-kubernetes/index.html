@@ -1,0 +1,109 @@
+<!doctype html><html lang=zh class="js csstransforms3d"><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=generator content="Hugo 0.65.3"><meta name=description content="腾讯云容器服务"><meta name=author content="腾讯云容器架构师团队"><link rel=icon href=/images/favicon.png type=image/png><title>Native Kubernetes 模式部署</title><script>window.algoliaAppID='B6Q6PSGUV5';window.algoliaKey='5b4678e9995fe4211c4fa43ad2ffdab5';window.algoliaIndex='kubetencent-book-zh';</script><script src=https://kubetencent-1251707795.cos.accelerate.myqcloud.com/js/bundle.min.8d534562810f42a5942ec72a0b7ae599c8bf0c96a4c8d6fafffa9bf21fce9d77.js></script><link rel=stylesheet href=https://kubetencent-1251707795.cos.accelerate.myqcloud.com/css/bundle.min.b0e6163350b1169d986890f4bd317db6286105863b7a53274abdb5c8d935eaa1.css><style>:root #header+#content>#left>#rlblock_left{display:none!important}</style></head><body data-url=/bigdata-ai/flink/native-kubernetes/><nav id=sidebar class=showVisitedLinks><div id=header-wrapper><div id=header><a id=logo href=https://book.kubetencent.io style=display:block><div style=width:100%;height:100%><img src=https://res.cloudinary.com/imroc/image/upload/c_scale,w_64/v1583293443/kubernetes-practice-guide/img/kubernetes.png><div style=height:100%;margin-bottom:3px;font-weight:700>腾讯云容器服务指南</div></div></a></div><div class=aa-input-container id=aa-input-container><input type=search id=aa-search-input class=aa-input-search placeholder=搜索... name=search autocomplete=off><svg class="aa-input-icon" viewBox="654 -372 1664 1664"><path d="M1806 332c0-123.3-43.8-228.8-131.5-316.5C1586.8-72.2 1481.3-116 1358-116s-228.8 43.8-316.5 131.5S910 208.7 910 332s43.8 228.8 131.5 316.5S1234.7 780 1358 780s228.8-43.8 316.5-131.5S1806 455.3 1806 332zm512 832c0 34.7-12.7 64.7-38 90s-55.3 38-90 38c-36 0-66-12.7-90-38l-343-342c-119.3 82.7-252.3 124-399 124-95.3.0-186.5-18.5-273.5-55.5s-162-87-225-150-113-138-150-225S654 427.3 654 332s18.5-186.5 55.5-273.5 87-162 150-225 138-113 225-150S1262.7-372 1358-372s186.5 18.5 273.5 55.5 162 87 225 150 113 138 150 225S2062 236.7 2062 332c0 146.7-41.3 279.7-124 399l343 343C2305.7 1098.7 2318 1128.7 2318 1164z" /></svg></div><script type=text/javascript>var baseurl="https:\/\/book.kubetencent.io";</script></div><div class=highlightable><ul class=topics><li data-nav-id=/intro/ title=产品指引 class=dd-item><a href=/intro/>产品指引
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/intro/tke/ title=TKE class=dd-item><a href=/intro/tke/>TKE
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/intro/eks/ title=EKS class=dd-item><a href=/intro/eks/>EKS
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/intro/tke-mesh/ title="TKE Mesh" class=dd-item><a href=/intro/tke-mesh/>TKE Mesh
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/intro/tcr/ title=TCR class=dd-item><a href=/intro/tcr/>TCR
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/intro/changelog/ title=更新历史 class=dd-item><a href=/intro/changelog/>更新历史
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/network/ title=集群网络 class=dd-item><a href=/network/>集群网络
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/network/understand-cluster-networking/ title=彻底理解集群网络 class=dd-item><a href=/network/understand-cluster-networking/>彻底理解集群网络
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/network/tke-networking/ title="TKE 集群网络介绍" class=dd-item><a href=/network/tke-networking/>TKE 集群网络介绍
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/network/analysis-cidr/ title="网络划分与最大节点/service/pod 的数量" class=dd-item><a href=/network/analysis-cidr/>网络划分与最大节点/service/pod 的数量
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/network/container-route/ title=容器路由互通 class=dd-item><a href=/network/container-route/>容器路由互通
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/ingress/ title=Ingress class=dd-item><a href=/ingress/>Ingress
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/ingress/understand-ingress/ title="彻底理解 Ingress" class=dd-item><a href=/ingress/understand-ingress/>彻底理解 Ingress
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/ingress/choose-ingress/ title="Ingress 方案选型" class=dd-item><a href=/ingress/choose-ingress/>Ingress 方案选型
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/ingress/tke-ingress/ title="TKE Ingress" class=dd-item><a href=/ingress/tke-ingress/>TKE Ingress
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/ingress/other/ title="开源 Ingress 方案" class=dd-item><a href=/ingress/other/>开源 Ingress 方案
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/ingress/other/nginx-ingress/ title="Nginx Ingress on TKE" class=dd-item><a href=/ingress/other/nginx-ingress/>Nginx Ingress on TKE
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/ingress/other/traefik-ingress/ title="Traefik Ingress on TKE" class=dd-item><a href=/ingress/other/traefik-ingress/>Traefik Ingress on TKE
+<i class="fas fa-check read-icon"></i></a></li></ul></li></ul></li><li data-nav-id=/storage/ title=存储 class=dd-item><a href=/storage/>存储
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/andon/ title=附加组件 class=dd-item><a href=/andon/>附加组件
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/andon/install-metrics-server-on-tke/ title="在 TKE 中安装 metrics-server" class=dd-item><a href=/andon/install-metrics-server-on-tke/>在 TKE 中安装 metrics-server
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/monitoring/ title=监控告警 class=dd-item><a href=/monitoring/>监控告警
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/monitoring/deploy-prometheus-on-tke/ title="在 TKE 上搭建 Prometheus 监控系统" class=dd-item><a href=/monitoring/deploy-prometheus-on-tke/>在 TKE 上搭建 Prometheus 监控系统
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/log/ title=日志搜集 class=dd-item><a href=/log/>日志搜集
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/cicd/ title=CI/CD class=dd-item><a href=/cicd/>CI/CD
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/bigdata-ai/ title="大数据与 AI" class="dd-item
+parent"><a href=/bigdata-ai/>大数据与 AI
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/bigdata-ai/gpu-share/ title="GPU 虚拟化" class=dd-item><a href=/bigdata-ai/gpu-share/>GPU 虚拟化
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/bigdata-ai/flink/ title=Flink class="dd-item
+parent"><a href=/bigdata-ai/flink/>Flink
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/bigdata-ai/flink/intro/ title="Flink 介绍" class=dd-item><a href=/bigdata-ai/flink/intro/>Flink 介绍
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/bigdata-ai/flink/session-cluster/ title="Session Cluster 模式部署" class=dd-item><a href=/bigdata-ai/flink/session-cluster/>Session Cluster 模式部署
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/bigdata-ai/flink/job-cluster/ title="Job Cluster 模式部署" class=dd-item><a href=/bigdata-ai/flink/job-cluster/>Job Cluster 模式部署
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/bigdata-ai/flink/native-kubernetes/ title="Native Kubernetes 模式部署" class="dd-item active"><a href=/bigdata-ai/flink/native-kubernetes/>Native Kubernetes 模式部署
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/bigdata-ai/flink/ title="Flink on TKE/EKS" class=dd-item><a href=/bigdata-ai/flink/>Flink on TKE/EKS
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/bigdata-ai/spark/ title="Spark on TKE/EKS" class=dd-item><a href=/bigdata-ai/spark/>Spark on TKE/EKS
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/bigdata-ai/tensorflow/ title="TensorFlow on TKE/EKS" class=dd-item><a href=/bigdata-ai/tensorflow/>TensorFlow on TKE/EKS
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/faq/ title=FAQ class=dd-item><a href=/faq/>FAQ
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/faq/eks/ title="EKS 常见问题" class=dd-item><a href=/faq/eks/>EKS 常见问题
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/faq/tke/ title="TKE 常见问题" class=dd-item><a href=/faq/tke/>TKE 常见问题
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/faq/registry/ title=镜像仓库常见问题 class=dd-item><a href=/faq/registry/>镜像仓库常见问题
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/serverless/ title=Serverless class=dd-item><a href=/serverless/>Serverless
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/mesh/ title="Servie Mesh" class=dd-item><a href=/mesh/>Servie Mesh
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/containerization/ title=业务容器化 class=dd-item><a href=/containerization/>业务容器化
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/containerization/source-ip/ title="获取源 IP" class=dd-item><a href=/containerization/source-ip/>获取源 IP
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/containerization/fixed-ip/ title="固定 IP" class=dd-item><a href=/containerization/fixed-ip/>固定 IP
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/containerization/srpingcloud/ title="Spring Cloud" class=dd-item><a href=/containerization/srpingcloud/>Spring Cloud
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/containerization/dubbo/ title=Dubbo class=dd-item><a href=/containerization/dubbo/>Dubbo
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/security/ title=安全管控 class=dd-item><a href=/security/>安全管控
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/security/audit/ title=审计管理 class=dd-item><a href=/security/audit/>审计管理
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/security/app/ title=应用权限管理 class=dd-item><a href=/security/app/>应用权限管理
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/security/user/ title=用户权限管理 class=dd-item><a href=/security/user/>用户权限管理
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/damn/ title=避坑指南 class=dd-item><a href=/damn/>避坑指南
+<i class="fas fa-check read-icon"></i></a></li></ul><section id=prefooter><hr><ul><li><a class=padding><i class="fas fa-language fa-fw"></i><div class=select-style><select id=select-language onchange="location=this.value;">
+<option id=zh value=https://book.kubetencent.io/bigdata-ai/flink/native-kubernetes/ selected>简体中文</option></select><svg id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="255" height="255" viewBox="0 0 255 255" style="enable-background:new 0 0 255 255"><g><g id="arrow-drop-down"><polygon points="0,63.75 127.5,191.25 255,63.75" /></g></g></svg></div></a></li><li><a class=padding href=# data-clear-history-toggle><i class="fas fa-history fa-fw"></i>清理历史记录</a></li></ul></section><section id=footer><center><a class=github-button href=https://github.com/TencentCloudContainerTeam/book data-icon=octicon-star data-show-count=true aria-label="Star imroc/kubernetes-practice-guide on GitHub">Star</a>
+<a class=github-button href=https://github.com/TencentCloudContainerTeam/book/fork data-icon=octicon-repo-forked data-show-count=true aria-label="Fork TencentCloudContainerTeam/book on GitHub">Fork</a></center>
+<script async defer src=https://buttons.github.io/buttons.js></script></section></div></nav><section id=body><div id=overlay></div><div class="padding highlightable"><div><div id=top-bar><div id=top-github-link><a class=github-link title=编辑当前页 href=https://github.com/TencentCloudContainerTeam/book/edit/master/content/zh/bigdata-ai/flink/native-kubernetes.md target=blank><i class="fas fa-code-branch"></i><span id=top-github-link-text>编辑当前页</span></a></div><div id=breadcrumbs itemscope itemtype=http://data-vocabulary.org/Breadcrumb><span id=sidebar-toggle-span><a href=# id=sidebar-toggle data-sidebar-toggle><i class="fas fa-bars"></i></a></span><span id=toc-menu><i class="fas fa-list-alt"></i></span><span class=links><a href=/>腾讯云容器服务指南</a> > <a href=/bigdata-ai/>大数据与 AI</a> > <a href=/bigdata-ai/flink/>Flink</a> > Native Kubernetes 模式部署</span></div><div class=progress><div class=wrapper><nav id=TableOfContents><ul><li><a href=#与-kubernetes-集成>与 Kubernetes 集成</a></li><li><a href=#部署步骤>部署步骤</a></li><li><a href=#参考资料>参考资料</a></li></ul></nav></div></div></div></div><div id=head-tags></div><div id=body-inner><h1>Native Kubernetes 模式部署</h1><div class="notices info"><p>文档当前状态：Alpha</p></div><h2 id=与-kubernetes-集成>与 Kubernetes 集成</h2><p>在 flink 1.10 之前，在 k8s 上运行 flink 任务都是需要事先指定 TaskManager 的个数以及CPU和内存的，存在一个问题：大多数情况下，你在任务启动前根本无法精确的预估这个任务需要多少个TaskManager，如果指定多了，会导致资源浪费，指定少了，会导致任务调度不起来。本质原因是在 Kubernetes 上运行的 Flink 任务并没有直接向 Kubernetes 集群去申请资源。</p><p>在 2020-02-11 发布了 flink 1.10，该版本完成了与 k8s 集成的第一阶段，实现了向 k8s 动态申请资源，就像跟 yarn 或 mesos 集成那样。</p><h2 id=部署步骤>部署步骤</h2><p>确定 flink 部署的 namespace，这里我选 &ldquo;flink&rdquo;，确保 namespace 已创建:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>kubectl create ns flink
+</code></pre></div><p>创建 RBAC (创建 ServiceAccount 绑定 flink 需要的对 k8s 集群操作的权限):</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#66d9ef>apiVersion</span>: v1
+<span style=color:#66d9ef>kind</span>: ServiceAccount
+<span style=color:#66d9ef>metadata</span>:
+  <span style=color:#66d9ef>name</span>: flink
+  <span style=color:#66d9ef>namespace</span>: flink
+
+---
+
+<span style=color:#66d9ef>apiVersion</span>: rbac.authorization.k8s.io/v1
+<span style=color:#66d9ef>kind</span>: ClusterRoleBinding
+<span style=color:#66d9ef>metadata</span>:
+  <span style=color:#66d9ef>name</span>: flink-role-binding
+<span style=color:#66d9ef>roleRef</span>:
+  <span style=color:#66d9ef>apiGroup</span>: rbac.authorization.k8s.io
+  <span style=color:#66d9ef>kind</span>: ClusterRole
+  <span style=color:#66d9ef>name</span>: edit
+<span style=color:#66d9ef>subjects</span>:
+- <span style=color:#66d9ef>kind</span>: ServiceAccount
+  <span style=color:#66d9ef>name</span>: flink
+  <span style=color:#66d9ef>namespace</span>: flink
+</code></pre></div><p>利用 job 运行启动 flink 的引导程序 (请求 k8s 创建 jobmanager 相关的资源: service, deployment, configmap):</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#66d9ef>apiVersion</span>: batch/v1
+<span style=color:#66d9ef>kind</span>: Job
+<span style=color:#66d9ef>metadata</span>:
+  <span style=color:#66d9ef>name</span>: boot-flink
+  <span style=color:#66d9ef>namespace</span>: flink
+<span style=color:#66d9ef>spec</span>:
+  <span style=color:#66d9ef>template</span>:
+    <span style=color:#66d9ef>spec</span>:
+      <span style=color:#66d9ef>serviceAccount</span>: flink
+      <span style=color:#66d9ef>restartPolicy</span>: OnFailure
+      <span style=color:#66d9ef>containers</span>:
+      - <span style=color:#66d9ef>name</span>: start
+        <span style=color:#66d9ef>image</span>: flink:<span style=color:#ae81ff>1.10</span>
+        <span style=color:#66d9ef>workingDir</span>: /opt/flink
+        <span style=color:#66d9ef>command</span>: [<span style=color:#e6db74>&#34;bash&#34;</span>, <span style=color:#e6db74>&#34;-c&#34;</span>, <span style=color:#e6db74>&#34;$FLINK_HOME/bin/kubernetes-session.sh \
+</span><span style=color:#e6db74>          -Dkubernetes.cluster-id=roc \
+</span><span style=color:#e6db74>          -Dkubernetes.jobmanager.service-account=flink \
+</span><span style=color:#e6db74>          -Dtaskmanager.memory.process.size=1024m \
+</span><span style=color:#e6db74>          -Dkubernetes.taskmanager.cpu=1 \
+</span><span style=color:#e6db74>          -Dtaskmanager.numberOfTaskSlots=1 \
+</span><span style=color:#e6db74>          -Dkubernetes.container.image=flink:1.10 \
+</span><span style=color:#e6db74>          -Dkubernetes.namespace=flink&#34;</span>]
+</code></pre></div><ul><li><code>kubernetes.cluster-id</code>: 指定 flink 集群的名称，后续自动创建的 k8s 资源会带上这个作为前缀或后缀</li><li><code>kubernetes.namespace</code>: 指定 flink 相关的资源创建在哪个命名空间，这里我们用 <code>flink</code> 命名空间</li><li><code>kubernetes.jobmanager.service-account</code>: 指定我们刚刚为 flink 创建的 ServiceAccount</li><li><code>kubernetes.container.image</code>: 指定 flink 需要用的镜像，这里我们部署的 1.10 版本，所以镜像用 <code>flink:1.10</code></li></ul><p>部署完成后，我们可以看到有刚刚运行完成的 job 的 pod 和被这个 job 拉起的 flink jobmanager 的 pod，前缀与配置 <code>kubernetes.cluster-id</code> 相同:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ kubectl -n flink get pod
+NAME                  READY   STATUS      RESTARTS   AGE
+roc-cf9f6b5df-csk9z   1/1     Running     <span style=color:#ae81ff>0</span>          84m
+boot-flink-nc2qx      0/1     Completed   <span style=color:#ae81ff>0</span>          84m
+</code></pre></div><p>还有 jobmanager 的 service:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ kubectl -n flink get svc
+NAME       TYPE           CLUSTER-IP       EXTERNAL-IP      PORT<span style=color:#f92672>(</span>S<span style=color:#f92672>)</span>                      AGE
+roc        ClusterIP      172.16.255.152   &lt;none&gt;           8081/TCP,6123/TCP,6124/TCP   88m
+roc-rest   LoadBalancer   172.16.255.11    150.109.27.251   8081:31240/TCP               88m
+</code></pre></div><p>访问 http://150.109.27.251:8081 即可进入此 flink 集群的 ui 界面。</p><h2 id=参考资料>参考资料</h2><ul><li>Active Kubernetes integration phase 2 - Advanced Features: <a href=https://issues.apache.org/jira/browse/FLINK-14460>https://issues.apache.org/jira/browse/FLINK-14460</a></li><li>Apache Flink 1.10.0 Release Announcement: <a href=https://flink.apache.org/news/2020/02/11/release-1.10.0.html>https://flink.apache.org/news/2020/02/11/release-1.10.0.html</a></li><li>Native Kubernetes Setup Beta (flink与kubernetes集成的官方教程): <a href=https://ci.apache.org/projects/flink/flink-docs-release-1.10/ops/deployment/native_kubernetes.html>https://ci.apache.org/projects/flink/flink-docs-release-1.10/ops/deployment/native_kubernetes.html</a></li></ul><footer class=footline></footer></div><div id=gitalk-container></div><link rel=stylesheet href=https://unpkg.com/gitalk/dist/gitalk.css><script src=https://unpkg.com/gitalk/dist/gitalk.min.js></script><script>console.log("gitalk id:36102bf8c5b423a20fd706e814c50bbd")
+var gitalk=new Gitalk({clientID:'4e9444088ec088b58f37',clientSecret:'b8faa4be9753a13d0b01ccdf4ccc015f9983b58c',repo:'book',owner:'TencentCloudContainerTeam',admin:["imroc","coderwangke","willbern"],labels:['Gitalk'],title:'Native Kubernetes 模式部署',createIssueManually:false,id:'36102bf8c5b423a20fd706e814c50bbd',distractionFreeMode:true});gitalk.render('gitalk-container');</script></div><div id=navigation><a class="nav nav-prev" href=/bigdata-ai/flink/native-kubernetes/ title="Native Kubernetes 模式部署"><i class="fa fa-chevron-left"></i></a><a class="nav nav-next" href=/bigdata-ai/spark/ title="Spark on TKE/EKS" style=margin-right:0><i class="fa fa-chevron-right"></i></a></div></section><div style=left:-1000px;overflow:scroll;position:absolute;top:-1000px;border:none;box-sizing:content-box;height:200px;margin:0;padding:0;width:200px><div style=border:none;box-sizing:content-box;height:200px;margin:0;padding:0;width:200px></div></div></body></html>

@@ -1,0 +1,158 @@
+<!doctype html><html lang=zh class="js csstransforms3d"><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=generator content="Hugo 0.65.3"><meta name=description content="腾讯云容器服务"><meta name=author content="腾讯云容器架构师团队"><link rel=icon href=/images/favicon.png type=image/png><title>Spark on TKE/EKS</title><script>window.algoliaAppID='B6Q6PSGUV5';window.algoliaKey='5b4678e9995fe4211c4fa43ad2ffdab5';window.algoliaIndex='kubetencent-book-zh';</script><script src=https://kubetencent-1251707795.cos.accelerate.myqcloud.com/js/bundle.min.8d534562810f42a5942ec72a0b7ae599c8bf0c96a4c8d6fafffa9bf21fce9d77.js></script><link rel=stylesheet href=https://kubetencent-1251707795.cos.accelerate.myqcloud.com/css/bundle.min.b0e6163350b1169d986890f4bd317db6286105863b7a53274abdb5c8d935eaa1.css><style>:root #header+#content>#left>#rlblock_left{display:none!important}</style></head><body data-url=/bigdata-ai/spark/><nav id=sidebar class=showVisitedLinks><div id=header-wrapper><div id=header><a id=logo href=https://book.kubetencent.io style=display:block><div style=width:100%;height:100%><img src=https://res.cloudinary.com/imroc/image/upload/c_scale,w_64/v1583293443/kubernetes-practice-guide/img/kubernetes.png><div style=height:100%;margin-bottom:3px;font-weight:700>腾讯云容器服务指南</div></div></a></div><div class=aa-input-container id=aa-input-container><input type=search id=aa-search-input class=aa-input-search placeholder=搜索... name=search autocomplete=off><svg class="aa-input-icon" viewBox="654 -372 1664 1664"><path d="M1806 332c0-123.3-43.8-228.8-131.5-316.5C1586.8-72.2 1481.3-116 1358-116s-228.8 43.8-316.5 131.5S910 208.7 910 332s43.8 228.8 131.5 316.5S1234.7 780 1358 780s228.8-43.8 316.5-131.5S1806 455.3 1806 332zm512 832c0 34.7-12.7 64.7-38 90s-55.3 38-90 38c-36 0-66-12.7-90-38l-343-342c-119.3 82.7-252.3 124-399 124-95.3.0-186.5-18.5-273.5-55.5s-162-87-225-150-113-138-150-225S654 427.3 654 332s18.5-186.5 55.5-273.5 87-162 150-225 138-113 225-150S1262.7-372 1358-372s186.5 18.5 273.5 55.5 162 87 225 150 113 138 150 225S2062 236.7 2062 332c0 146.7-41.3 279.7-124 399l343 343C2305.7 1098.7 2318 1128.7 2318 1164z" /></svg></div><script type=text/javascript>var baseurl="https:\/\/book.kubetencent.io";</script></div><div class=highlightable><ul class=topics><li data-nav-id=/intro/ title=产品指引 class=dd-item><a href=/intro/>产品指引
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/intro/tke/ title=TKE class=dd-item><a href=/intro/tke/>TKE
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/intro/eks/ title=EKS class=dd-item><a href=/intro/eks/>EKS
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/intro/tke-mesh/ title="TKE Mesh" class=dd-item><a href=/intro/tke-mesh/>TKE Mesh
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/intro/tcr/ title=TCR class=dd-item><a href=/intro/tcr/>TCR
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/intro/changelog/ title=更新历史 class=dd-item><a href=/intro/changelog/>更新历史
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/network/ title=集群网络 class=dd-item><a href=/network/>集群网络
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/network/understand-cluster-networking/ title=彻底理解集群网络 class=dd-item><a href=/network/understand-cluster-networking/>彻底理解集群网络
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/network/tke-networking/ title="TKE 集群网络介绍" class=dd-item><a href=/network/tke-networking/>TKE 集群网络介绍
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/network/analysis-cidr/ title="网络划分与最大节点/service/pod 的数量" class=dd-item><a href=/network/analysis-cidr/>网络划分与最大节点/service/pod 的数量
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/network/container-route/ title=容器路由互通 class=dd-item><a href=/network/container-route/>容器路由互通
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/ingress/ title=Ingress class=dd-item><a href=/ingress/>Ingress
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/ingress/understand-ingress/ title="彻底理解 Ingress" class=dd-item><a href=/ingress/understand-ingress/>彻底理解 Ingress
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/ingress/choose-ingress/ title="Ingress 方案选型" class=dd-item><a href=/ingress/choose-ingress/>Ingress 方案选型
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/ingress/tke-ingress/ title="TKE Ingress" class=dd-item><a href=/ingress/tke-ingress/>TKE Ingress
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/ingress/other/ title="开源 Ingress 方案" class=dd-item><a href=/ingress/other/>开源 Ingress 方案
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/ingress/other/nginx-ingress/ title="Nginx Ingress on TKE" class=dd-item><a href=/ingress/other/nginx-ingress/>Nginx Ingress on TKE
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/ingress/other/traefik-ingress/ title="Traefik Ingress on TKE" class=dd-item><a href=/ingress/other/traefik-ingress/>Traefik Ingress on TKE
+<i class="fas fa-check read-icon"></i></a></li></ul></li></ul></li><li data-nav-id=/storage/ title=存储 class=dd-item><a href=/storage/>存储
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/andon/ title=附加组件 class=dd-item><a href=/andon/>附加组件
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/andon/install-metrics-server-on-tke/ title="在 TKE 中安装 metrics-server" class=dd-item><a href=/andon/install-metrics-server-on-tke/>在 TKE 中安装 metrics-server
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/monitoring/ title=监控告警 class=dd-item><a href=/monitoring/>监控告警
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/monitoring/deploy-prometheus-on-tke/ title="在 TKE 上搭建 Prometheus 监控系统" class=dd-item><a href=/monitoring/deploy-prometheus-on-tke/>在 TKE 上搭建 Prometheus 监控系统
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/log/ title=日志搜集 class=dd-item><a href=/log/>日志搜集
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/cicd/ title=CI/CD class=dd-item><a href=/cicd/>CI/CD
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/bigdata-ai/ title="大数据与 AI" class="dd-item
+parent"><a href=/bigdata-ai/>大数据与 AI
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/bigdata-ai/gpu-share/ title="GPU 虚拟化" class=dd-item><a href=/bigdata-ai/gpu-share/>GPU 虚拟化
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/bigdata-ai/flink/ title=Flink class=dd-item><a href=/bigdata-ai/flink/>Flink
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/bigdata-ai/flink/intro/ title="Flink 介绍" class=dd-item><a href=/bigdata-ai/flink/intro/>Flink 介绍
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/bigdata-ai/flink/session-cluster/ title="Session Cluster 模式部署" class=dd-item><a href=/bigdata-ai/flink/session-cluster/>Session Cluster 模式部署
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/bigdata-ai/flink/job-cluster/ title="Job Cluster 模式部署" class=dd-item><a href=/bigdata-ai/flink/job-cluster/>Job Cluster 模式部署
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/bigdata-ai/flink/native-kubernetes/ title="Native Kubernetes 模式部署" class=dd-item><a href=/bigdata-ai/flink/native-kubernetes/>Native Kubernetes 模式部署
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/bigdata-ai/flink/ title="Flink on TKE/EKS" class=dd-item><a href=/bigdata-ai/flink/>Flink on TKE/EKS
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/bigdata-ai/spark/ title="Spark on TKE/EKS" class="dd-item active"><a href=/bigdata-ai/spark/>Spark on TKE/EKS
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/bigdata-ai/tensorflow/ title="TensorFlow on TKE/EKS" class=dd-item><a href=/bigdata-ai/tensorflow/>TensorFlow on TKE/EKS
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/faq/ title=FAQ class=dd-item><a href=/faq/>FAQ
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/faq/eks/ title="EKS 常见问题" class=dd-item><a href=/faq/eks/>EKS 常见问题
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/faq/tke/ title="TKE 常见问题" class=dd-item><a href=/faq/tke/>TKE 常见问题
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/faq/registry/ title=镜像仓库常见问题 class=dd-item><a href=/faq/registry/>镜像仓库常见问题
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/serverless/ title=Serverless class=dd-item><a href=/serverless/>Serverless
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/mesh/ title="Servie Mesh" class=dd-item><a href=/mesh/>Servie Mesh
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/containerization/ title=业务容器化 class=dd-item><a href=/containerization/>业务容器化
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/containerization/source-ip/ title="获取源 IP" class=dd-item><a href=/containerization/source-ip/>获取源 IP
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/containerization/fixed-ip/ title="固定 IP" class=dd-item><a href=/containerization/fixed-ip/>固定 IP
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/containerization/srpingcloud/ title="Spring Cloud" class=dd-item><a href=/containerization/srpingcloud/>Spring Cloud
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/containerization/dubbo/ title=Dubbo class=dd-item><a href=/containerization/dubbo/>Dubbo
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/security/ title=安全管控 class=dd-item><a href=/security/>安全管控
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/security/audit/ title=审计管理 class=dd-item><a href=/security/audit/>审计管理
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/security/app/ title=应用权限管理 class=dd-item><a href=/security/app/>应用权限管理
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/security/user/ title=用户权限管理 class=dd-item><a href=/security/user/>用户权限管理
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/damn/ title=避坑指南 class=dd-item><a href=/damn/>避坑指南
+<i class="fas fa-check read-icon"></i></a></li></ul><section id=prefooter><hr><ul><li><a class=padding><i class="fas fa-language fa-fw"></i><div class=select-style><select id=select-language onchange="location=this.value;">
+<option id=zh value=https://book.kubetencent.io/bigdata-ai/spark/ selected>简体中文</option></select><svg id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="255" height="255" viewBox="0 0 255 255" style="enable-background:new 0 0 255 255"><g><g id="arrow-drop-down"><polygon points="0,63.75 127.5,191.25 255,63.75" /></g></g></svg></div></a></li><li><a class=padding href=# data-clear-history-toggle><i class="fas fa-history fa-fw"></i>清理历史记录</a></li></ul></section><section id=footer><center><a class=github-button href=https://github.com/TencentCloudContainerTeam/book data-icon=octicon-star data-show-count=true aria-label="Star imroc/kubernetes-practice-guide on GitHub">Star</a>
+<a class=github-button href=https://github.com/TencentCloudContainerTeam/book/fork data-icon=octicon-repo-forked data-show-count=true aria-label="Fork TencentCloudContainerTeam/book on GitHub">Fork</a></center>
+<script async defer src=https://buttons.github.io/buttons.js></script></section></div></nav><section id=body><div id=overlay></div><div class="padding highlightable"><div><div id=top-bar><div id=top-github-link><a class=github-link title=编辑当前页 href=https://github.com/TencentCloudContainerTeam/book/edit/master/content/zh/bigdata-ai/spark.md target=blank><i class="fas fa-code-branch"></i><span id=top-github-link-text>编辑当前页</span></a></div><div id=breadcrumbs itemscope itemtype=http://data-vocabulary.org/Breadcrumb><span id=sidebar-toggle-span><a href=# id=sidebar-toggle data-sidebar-toggle><i class="fas fa-bars"></i></a></span><span id=toc-menu><i class="fas fa-list-alt"></i></span><span class=links><a href=/>腾讯云容器服务指南</a> > <a href=/bigdata-ai/>大数据与 AI</a> > Spark on TKE/EKS</span></div><div class=progress><div class=wrapper><nav id=TableOfContents><ul><li><a href=#概念说明>概念说明</a></li><li><a href=#架构模式>架构模式</a></li><li><a href=#用户指南>用户指南</a><ul><li><a href=#编译>编译</a></li><li><a href=#构建镜像>构建镜像</a></li><li><a href=#应用代码准备>应用代码准备</a></li><li><a href=#集群准备>集群准备</a></li><li><a href=#连接集群>连接集群</a></li><li><a href=#driver-和-executor-相关配置>Driver 和 Executor 相关配置</a></li><li><a href=#检查相关>检查相关</a></li><li><a href=#已知问题>已知问题</a></li><li><a href=#参考链接>参考链接</a></li></ul></li></ul></nav></div></div></div></div><div id=head-tags></div><div id=body-inner><h1>Spark on TKE/EKS</h1><div class="notices info"><p>文档当前状态：Alpha</p></div><h2 id=概念说明>概念说明</h2><ul><li>Spark Application：由客户编写，并提交到spark框架中执行的用户代码逻辑。</li><li>Spark Driver：运行Spark Application代码逻辑中的main函数。</li><li>Spark Context：启动spark application的时候创建，作为Spark 运行时环境。</li><li>Spark Executor：负责执行单独的Task。</li><li>Spark Client mode：client模式下，driver可以运行在集群外。</li><li>Spark Cluster mode：cluster模式下，driver需要运行在集群中。</li></ul><h2 id=架构模式>架构模式</h2><p>spark on k8s最先只支持standalone模式，而自spark 2.3.0版本开始，支持kubernetes原生调度。</p><p>1 standalone mode</p><p>2 k8s native mode
+<img src=/images/spark-on-k8s.png alt=spark-on-k8s.png></p><p>处理流程如下：</p><ul><li>spark-submit提交spark程序到k8s集群中。</li><li>spark-submit创建driver pod。</li><li>driver 创建executor pod，并把自己设置成executor pod的ownerReferences。</li><li>executor成功运行，并给driver上报ready 状态。</li><li>driver下发任务到executor 中执行。</li><li>当任务完成之后，executor 自动终止，并被driver 清理。</li><li>driver pod输出log，后维持在completed状态。</li></ul><h2 id=用户指南>用户指南</h2><h3 id=编译>编译</h3><p>备注: 安装jdk1.8</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># 下载</span>
+$ git clone https://github.com/apache/spark.git
+<span style=color:#75715e># 解压</span>
+$ mkdir -p /usr/local/bin
+$ tar -zxvf jdk-8u241-linux-x64.tar.gz -C /usr/local/java
+
+$ export JAVA_HOME<span style=color:#f92672>=</span>/usr/local/bin/jdk1.8.0_241
+$ export PATH<span style=color:#f92672>=</span>$JAVA_HOME/bin:$PATH
+<span style=color:#75715e># 执行编译</span>
+$ cd ./spark/ <span style=color:#f92672>&amp;&amp;</span> ./build/mvn -Pkubernetes -DskipTests clean package
+</code></pre></div><p>提示：除了编译源码之外，还可以直接下载spark的release package。link：https://spark.apache.org/downloads.html</p><h3 id=构建镜像>构建镜像</h3><p>缺省软件镜像源很慢, 建议修改<code>./spark/resource-managers/kubernetes/docker/src/main/dockerfiles/spark/Dockerfile</code>并添加如下腾讯云源。</p><pre><code>RUN sed -i 's/deb.debian.org/mirrors.tencentyun.com/g' /etc/apt/sources.list  &amp;&amp; \
+sed -i 's/security.debian.org/mirrors.tencentyun.com/g' /etc/apt/sources.list
+</code></pre><p>开始构建基础镜像并上传到ccr仓库</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># 构建</span>
+sudo ./bin/docker-image-tool.sh -r ccr.ccs.tencentyun.com/hale -t 2.4.5 build
+<span style=color:#75715e># 上传</span>
+sudo ./bin/docker-image-tool.sh -r ccr.ccs.tencentyun.com/hale -t 2.4.5 push
+</code></pre></div><h3 id=应用代码准备>应用代码准备</h3><p>一般来说，应用代码逻辑会编译在同一份jar文件中，Driver和executor运行过程中都会用到这个jar，最新的spark已经支持以下两种方式提供：</p><p>1 远程，把应用代码放到远程，比如hdfs或者http server，然后以远程uri的方式（http://）提供。一般推荐这种方式。</p><p>比如临时启动http server, 然后通过http://10.0.0.172:8000/来访问。</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ cd /root/spark-2.4.5-bin-hadoop2.7/examples/jars <span style=color:#f92672>&amp;&amp;</span> python -m SimpleHTTPServer
+</code></pre></div><p>2 本地，把应用代码提前打包到自建的镜像中，然后在命令行中以local://的方式提供。这种方式需要每次提交代码后再重新制作镜像，相对远程方式来说比较麻烦。</p><p>提示：直接从运行submit所在客户端的本地文件系统中提供应用代码，当前是不支持的。</p><h3 id=集群准备>集群准备</h3><p>1 打开集群的外网访问或者内网访问。</p><p>2 创建命名空间（比如spark）并确保成功下发镜像仓库秘钥<code>qcloudregistrykey</code>。</p><h3 id=连接集群>连接集群</h3><p>1 client mode</p><p>在client模式下，driver能够运行在集群外的vm上，但是driver必须要能够与集群的apiserver通信，TKE/EKS默认提供的是证书+token的认证方式（在控制台上通过集群管理&ndash;>基本信息&ndash;>集群凭证获取）。</p><p>另外，TKE/EKS集群提供的是自签名证书，java/scala代码缺省不认，因此，需要先将自签名证书导入到vm的证书库中，成为可信任证书。</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># 添加</span>
+$ keytool -importcert -alias sparkonk8s -keystore cacerts -storepass changeit -file ./ca.crt
+<span style=color:#75715e># 删除</span>
+$ keytool -delete -v -keystore cacerts -storepass changeit --alias sparkonk8s
+</code></pre></div><p>接下来，就可以在集群外的vm上执行spark-submit了，命令如下，其中应用代码以远程方式（http:/）提供：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ $SPARK_HOME/bin/spark-submit <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    --master k8s://https://$CLS_DOMIN:443 <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    --deploy-mode client <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    --class org.apache.spark.examples.SparkPi <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    --conf spark.kubernetes.container.image<span style=color:#f92672>=</span>$IMAGE_REPO/spark:2.4.5 <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    --conf spark.kubernetes.authenticate.caCertFile<span style=color:#f92672>=</span>/root/test/ca.crt <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    --conf spark.kubernetes.authenticate.oauthToken<span style=color:#f92672>=</span>HBlC0S64r8y2EUfqTxxxxFDzHlG5lub <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    --conf spark.executor.instances<span style=color:#f92672>=</span><span style=color:#ae81ff>2</span> <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    --conf spark.kubernetes.namespace<span style=color:#f92672>=</span>spark <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    --conf spark.kubernetes.container.image.pullSecrets<span style=color:#f92672>=</span>qcloudregistrykey <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    http://10.0.0.172:8000/examples/jars/spark-examples_2.11-2.4.5.jar
+</code></pre></div><p>2 cluster mode</p><p>在cluster模式下，driver和excutor都以pod的方式运行在集群中，同时，driver可以直接通过serviceaccount与集群的apisever认证，也比较方便。因此，一般推荐用户使用这种方式。</p><p>创建serviceaccount和rolebinding的命令如下：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ kubectl create serviceaccount spark --namespace spark
+$ kubectl create rolebinding spark-edit --clusterrole<span style=color:#f92672>=</span>edit --serviceaccount<span style=color:#f92672>=</span>spark:spark --namespace<span style=color:#f92672>=</span>spark
+</code></pre></div><p>接下来，根据spark-submit的执行环境，可以分为两种方式：</p><p>2.1 集群外节点上以命令方式执行</p><p>在集群外的vm节点上执行spark-submit命令的时候，spark-submit就需要与集群的apiserver建立通信了，可以参考client mode介绍的证书+token的认证方式与apiserver认证。命令如下，其中应用代码以本地方式（local:/）提供：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$SPARK_HOME/bin/spark-submit <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    --master k8s://https://$CLS_DOMIN:443 <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    --deploy-mode cluster <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    --class org.apache.spark.examples.SparkPi <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    --conf spark.kubernetes.container.image<span style=color:#f92672>=</span>$IMAGE_REPO/spark:2.4.5 <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    --conf spark.kubernetes.authenticate.submission.caCertFile<span style=color:#f92672>=</span>/root/test/ca.crt <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    --conf spark.kubernetes.authenticate.submission.oauthToken<span style=color:#f92672>=</span>HBlC0S64r8y2EUfFDzHlG5lub <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    --conf spark.kubernetes.authenticate.driver.serviceAccountName<span style=color:#f92672>=</span>spark <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    --conf spark.executor.instances<span style=color:#f92672>=</span><span style=color:#ae81ff>2</span> <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    --conf spark.kubernetes.namespace<span style=color:#f92672>=</span>spark <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    --conf spark.kubernetes.container.image.pullSecrets<span style=color:#f92672>=</span>qcloudregistrykey <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>local:///opt/spark/examples/jars/spark-examples_2.11-2.4.5.jar
+</code></pre></div><p>2.2. 集群内以job的方式执行</p><p>spark-submit运行在pod中，可以通过<code>serviceAccountName: spark</code>与apiserver通信。job的样例如下：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#66d9ef>apiVersion</span>: batch/v1
+<span style=color:#66d9ef>kind</span>: Job
+<span style=color:#66d9ef>metadata</span>:
+  <span style=color:#66d9ef>name</span>:  spark-submit
+  <span style=color:#66d9ef>namespace</span>: spark
+<span style=color:#66d9ef>spec</span>:
+  <span style=color:#66d9ef>template</span>:
+    <span style=color:#66d9ef>metadata</span>:
+      <span style=color:#66d9ef>name</span>:  spark-submit-example
+    <span style=color:#66d9ef>spec</span>:
+      <span style=color:#66d9ef>serviceAccountName</span>: spark
+      <span style=color:#66d9ef>containers</span>:
+      - <span style=color:#66d9ef>name</span>: spark-submit-example
+        <span style=color:#66d9ef>args</span>:
+        - /opt/spark/bin/spark-submit
+        - --master
+        - k8s://https://kubernetes.default.svc.cluster.local:<span style=color:#ae81ff>443</span>
+        - --deploy-mode
+        - cluster
+        - --conf
+        - spark.kubernetes.container.image=ccr.ccs.tencentyun.com/hale/spark:<span style=color:#ae81ff>2.4.5</span>
+        - --conf
+        - spark.kubernetes.authenticate.driver.serviceAccountName=spark
+        - --conf
+        - spark.kubernetes.namespace=spark
+        - --conf
+        - spark.executor.instances=<span style=color:#ae81ff>2</span>
+        - --conf
+        - spark.kubernetes.container.image.pullSecrets=qcloudregistrykey
+        - --class
+        - org.apache.spark.examples.SparkPi
+        - local:///opt/spark/examples/jars/spark-examples_2<span style=color:#ae81ff>.11-2.4.4</span>.jar
+        <span style=color:#66d9ef>env</span>:
+        - <span style=color:#66d9ef>name</span>: SPARK_HOME
+        <span style=color:#66d9ef>value</span>: /opt/spark
+        <span style=color:#66d9ef>resources</span>: {}
+        <span style=color:#66d9ef>image</span>: ccr.ccs.tencentyun.com/hale/spark:<span style=color:#ae81ff>2.4.5</span>
+        <span style=color:#66d9ef>imagePullPolicy</span>: Always
+</code></pre></div><p>参数说明：</p><ul><li><p>&ndash;master： 指定要连接的k8s集群，格式为<code>k8s://&lt;api_server_host>:&lt;k8s-apiserver-port></code>，其中api_server_host默认是https，而k8s-apiserver-port必须要显示指定，即使是443。</p></li><li><p>&ndash;deploy-mode：部署模式，当前仅支持cluster和client这两种模式。</p></li><li><p>&ndash;conf spark.kubernetes.authenticate.submission.caCertFile：submit任务时，与apiserver建立连接使用。当在client模式下，用<code>spark.kubernetes.authenticate.caCertFile</code>替代。</p></li><li><p>&ndash;conf spark.kubernetes.authenticate.submission.oauthToken：submit任务时，与apiserver建立连接使用。当在client模式下，用<code>spark.kubernetes.authenticate.oauthToken</code>替代。</p></li><li><p>&ndash;conf spark.kubernetes.authenticate.driver.serviceAccountName：指定driver pod使用的serviceAccountName。</p></li><li><p>&ndash;conf spark.executor.instances：指定executors的具体实例数。</p></li><li><p>&ndash;conf spark.kubernetes.namespace：指定driver和executors pod运行的命名空间。</p></li><li><p>应用代码提供的方式：当前支持远程（http:/）和本地（local:/），一般建议是使用远程方式，但是在cluster模式下，如果客户提前把应用代码放到了镜像中，也可以使用本地方式。</p></li></ul><h3 id=driver-和-executor-相关配置>Driver 和 Executor 相关配置</h3><p>1 镜像设置</p><ul><li>spark.kubernetes.container.image：指定容器镜像</li><li>spark.kubernetes.driver.container.image：指定driver pod的容器镜像，非必须</li><li>spark.kubernetes.executor.container.image：指定executor pod的容器镜像，非必须</li><li>spark.kubernetes.container.image.pullPolicy：指定镜像的拉取策略，默认为IfNotPresent</li><li>spark.kubernetes.container.image.pullSecrets：自动镜像的拉取秘钥</li></ul><p>2 资源设置</p><p>不指定资源的情况下，driver和Executor的资源默认为</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#66d9ef>resources</span>:
+	<span style=color:#66d9ef>limits</span>:
+ 		<span style=color:#66d9ef>memory</span>: 1408Mi
+  <span style=color:#66d9ef>requests</span>:
+    <span style=color:#66d9ef>cpu</span>: <span style=color:#e6db74>&#34;1&#34;</span>
+    <span style=color:#66d9ef>memory</span>: 1408Mi
+</code></pre></div><ul><li><p>spark.driver.memory：设置driver的request.memory， limit.memory与request.memory保持一致</p></li><li><p>spark.executor.memory：设置executor的request.memory，limit.memory与request.memory保持一致</p></li><li><p>spark.driver.cores：设置driver的request.cpu， 当前进支持整数</p></li><li><p>spark.executor.cores：设置driver的request.cpu，当前进支持整数</p></li><li><p>spark.kubernetes.driver.limit.cores：设置driver的limit.cpu</p></li><li><p>spark.kubernetes.executor.request.cores：设置driver的request.cpu，可以覆盖<code>spark.executor.cores</code>设置的值</p></li><li><p>spark.kubernetes.executor.limit.cores：设置executor的limit.cpu</p></li></ul><p>3 labels或者annotation设置</p><ul><li>spark.kubernetes.driver.label.[LabelName]：设置driver pod的label</li><li>spark.kubernetes.driver.annotation.[AnnotationName]：设置driver pod的annotation</li><li>spark.kubernetes.executor.label.[LabelName]：设置executor pod的label</li><li>spark.kubernetes.executor.annotation.[AnnotationName]：设置executor pod的annotation</li></ul><p>4 其他设置</p><ul><li>spark.kubernetes.node.selector.[labelKey]：设置driver 和executor pod的nodeSelector</li></ul><h3 id=检查相关>检查相关</h3><p>1 查看日志</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ kubectl -n<span style=color:#f92672>=</span>&lt;namespace&gt; logs -f &lt;driver-pod-name&gt;
+</code></pre></div><p>2 访问Driver UI</p><p>当driver 运行在vm节点上时，可以直接访问<code>http://&lt;vm-ip>:4040</code></p><p>当driver 运行在pod中时，可以通过如下方式访问：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># 先执行kubeclt port-forward</span> 
+$ kubectl port-forward &lt;driver-pod-name&gt; 4040:4040
+<span style=color:#75715e># 然后访问http://&lt;node-ip&gt;:4040</span>
+</code></pre></div><h3 id=已知问题>已知问题</h3><p>1 eks要求实例规格配置</p><p>运行在eks上的pod，都需要配置具体的实例规格，可以通过设置annotation的方式给配置实例规格，参考如下：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#75715e># 给driver pod设置实例规格，以1c2g为例</span>
+spark.kubernetes.driver.annotation.eks.tke.cloud.tencent.com/cpu=<span style=color:#ae81ff>1</span>
+spark.kubernetes.driver.annotation.eks.tke.cloud.tencent.com/mem=2Gi
+<span style=color:#75715e># 给executor pod设置实例规格，以1c2g为例</span>
+spark.kubernetes.executor.annotation.eks.tke.cloud.tencent.com/cpu=<span style=color:#ae81ff>1</span>
+spark.kubernetes.executor.annotation.eks.tke.cloud.tencent.com/mem=2Gi
+</code></pre></div><h3 id=参考链接>参考链接</h3><ul><li><a href=https://spark.apache.org/docs/latest/running-on-kubernetes.html#running-spark-on-kubernetes>https://spark.apache.org/docs/latest/running-on-kubernetes.html#running-spark-on-kubernetes</a></li><li><a href=https://github.com/kubernetes/kubernetes/issues/34377>https://github.com/kubernetes/kubernetes/issues/34377</a></li></ul><footer class=footline></footer></div><div id=gitalk-container></div><link rel=stylesheet href=https://unpkg.com/gitalk/dist/gitalk.css><script src=https://unpkg.com/gitalk/dist/gitalk.min.js></script><script>console.log("gitalk id:ea49d06101fce186a9bd747ee30cdded")
+var gitalk=new Gitalk({clientID:'4e9444088ec088b58f37',clientSecret:'b8faa4be9753a13d0b01ccdf4ccc015f9983b58c',repo:'book',owner:'TencentCloudContainerTeam',admin:["imroc","coderwangke","willbern"],labels:['Gitalk'],title:'Spark on TKE\/EKS',createIssueManually:false,id:'ea49d06101fce186a9bd747ee30cdded',distractionFreeMode:true});gitalk.render('gitalk-container');</script></div><div id=navigation><a class="nav nav-prev" href=/bigdata-ai/flink/ title="Flink on TKE/EKS"><i class="fa fa-chevron-left"></i></a><a class="nav nav-next" href=/bigdata-ai/tensorflow/ title="TensorFlow on TKE/EKS" style=margin-right:0><i class="fa fa-chevron-right"></i></a></div></section><div style=left:-1000px;overflow:scroll;position:absolute;top:-1000px;border:none;box-sizing:content-box;height:200px;margin:0;padding:0;width:200px><div style=border:none;box-sizing:content-box;height:200px;margin:0;padding:0;width:200px></div></div></body></html>

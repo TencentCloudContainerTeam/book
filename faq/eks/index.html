@@ -1,0 +1,203 @@
+<!doctype html><html lang=zh class="js csstransforms3d"><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=generator content="Hugo 0.65.3"><meta name=description content="腾讯云容器服务"><meta name=author content="腾讯云容器架构师团队"><link rel=icon href=/images/favicon.png type=image/png><title>EKS 常见问题</title><script>window.algoliaAppID='B6Q6PSGUV5';window.algoliaKey='5b4678e9995fe4211c4fa43ad2ffdab5';window.algoliaIndex='kubetencent-book-zh';</script><script src=https://kubetencent-1251707795.cos.accelerate.myqcloud.com/js/bundle.min.8d534562810f42a5942ec72a0b7ae599c8bf0c96a4c8d6fafffa9bf21fce9d77.js></script><link rel=stylesheet href=https://kubetencent-1251707795.cos.accelerate.myqcloud.com/css/bundle.min.b0e6163350b1169d986890f4bd317db6286105863b7a53274abdb5c8d935eaa1.css><style>:root #header+#content>#left>#rlblock_left{display:none!important}</style></head><body data-url=/faq/eks/><nav id=sidebar class=showVisitedLinks><div id=header-wrapper><div id=header><a id=logo href=https://book.kubetencent.io style=display:block><div style=width:100%;height:100%><img src=https://res.cloudinary.com/imroc/image/upload/c_scale,w_64/v1583293443/kubernetes-practice-guide/img/kubernetes.png><div style=height:100%;margin-bottom:3px;font-weight:700>腾讯云容器服务指南</div></div></a></div><div class=aa-input-container id=aa-input-container><input type=search id=aa-search-input class=aa-input-search placeholder=搜索... name=search autocomplete=off><svg class="aa-input-icon" viewBox="654 -372 1664 1664"><path d="M1806 332c0-123.3-43.8-228.8-131.5-316.5C1586.8-72.2 1481.3-116 1358-116s-228.8 43.8-316.5 131.5S910 208.7 910 332s43.8 228.8 131.5 316.5S1234.7 780 1358 780s228.8-43.8 316.5-131.5S1806 455.3 1806 332zm512 832c0 34.7-12.7 64.7-38 90s-55.3 38-90 38c-36 0-66-12.7-90-38l-343-342c-119.3 82.7-252.3 124-399 124-95.3.0-186.5-18.5-273.5-55.5s-162-87-225-150-113-138-150-225S654 427.3 654 332s18.5-186.5 55.5-273.5 87-162 150-225 138-113 225-150S1262.7-372 1358-372s186.5 18.5 273.5 55.5 162 87 225 150 113 138 150 225S2062 236.7 2062 332c0 146.7-41.3 279.7-124 399l343 343C2305.7 1098.7 2318 1128.7 2318 1164z" /></svg></div><script type=text/javascript>var baseurl="https:\/\/book.kubetencent.io";</script></div><div class=highlightable><ul class=topics><li data-nav-id=/intro/ title=产品指引 class=dd-item><a href=/intro/>产品指引
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/intro/tke/ title=TKE class=dd-item><a href=/intro/tke/>TKE
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/intro/eks/ title=EKS class=dd-item><a href=/intro/eks/>EKS
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/intro/tke-mesh/ title="TKE Mesh" class=dd-item><a href=/intro/tke-mesh/>TKE Mesh
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/intro/tcr/ title=TCR class=dd-item><a href=/intro/tcr/>TCR
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/intro/changelog/ title=更新历史 class=dd-item><a href=/intro/changelog/>更新历史
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/network/ title=集群网络 class=dd-item><a href=/network/>集群网络
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/network/understand-cluster-networking/ title=彻底理解集群网络 class=dd-item><a href=/network/understand-cluster-networking/>彻底理解集群网络
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/network/tke-networking/ title="TKE 集群网络介绍" class=dd-item><a href=/network/tke-networking/>TKE 集群网络介绍
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/network/analysis-cidr/ title="网络划分与最大节点/service/pod 的数量" class=dd-item><a href=/network/analysis-cidr/>网络划分与最大节点/service/pod 的数量
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/network/container-route/ title=容器路由互通 class=dd-item><a href=/network/container-route/>容器路由互通
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/ingress/ title=Ingress class=dd-item><a href=/ingress/>Ingress
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/ingress/understand-ingress/ title="彻底理解 Ingress" class=dd-item><a href=/ingress/understand-ingress/>彻底理解 Ingress
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/ingress/choose-ingress/ title="Ingress 方案选型" class=dd-item><a href=/ingress/choose-ingress/>Ingress 方案选型
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/ingress/tke-ingress/ title="TKE Ingress" class=dd-item><a href=/ingress/tke-ingress/>TKE Ingress
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/ingress/other/ title="开源 Ingress 方案" class=dd-item><a href=/ingress/other/>开源 Ingress 方案
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/ingress/other/nginx-ingress/ title="Nginx Ingress on TKE" class=dd-item><a href=/ingress/other/nginx-ingress/>Nginx Ingress on TKE
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/ingress/other/traefik-ingress/ title="Traefik Ingress on TKE" class=dd-item><a href=/ingress/other/traefik-ingress/>Traefik Ingress on TKE
+<i class="fas fa-check read-icon"></i></a></li></ul></li></ul></li><li data-nav-id=/storage/ title=存储 class=dd-item><a href=/storage/>存储
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/andon/ title=附加组件 class=dd-item><a href=/andon/>附加组件
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/andon/install-metrics-server-on-tke/ title="在 TKE 中安装 metrics-server" class=dd-item><a href=/andon/install-metrics-server-on-tke/>在 TKE 中安装 metrics-server
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/monitoring/ title=监控告警 class=dd-item><a href=/monitoring/>监控告警
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/monitoring/deploy-prometheus-on-tke/ title="在 TKE 上搭建 Prometheus 监控系统" class=dd-item><a href=/monitoring/deploy-prometheus-on-tke/>在 TKE 上搭建 Prometheus 监控系统
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/log/ title=日志搜集 class=dd-item><a href=/log/>日志搜集
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/cicd/ title=CI/CD class=dd-item><a href=/cicd/>CI/CD
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/bigdata-ai/ title="大数据与 AI" class=dd-item><a href=/bigdata-ai/>大数据与 AI
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/bigdata-ai/gpu-share/ title="GPU 虚拟化" class=dd-item><a href=/bigdata-ai/gpu-share/>GPU 虚拟化
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/bigdata-ai/flink/ title=Flink class=dd-item><a href=/bigdata-ai/flink/>Flink
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/bigdata-ai/flink/intro/ title="Flink 介绍" class=dd-item><a href=/bigdata-ai/flink/intro/>Flink 介绍
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/bigdata-ai/flink/session-cluster/ title="Session Cluster 模式部署" class=dd-item><a href=/bigdata-ai/flink/session-cluster/>Session Cluster 模式部署
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/bigdata-ai/flink/job-cluster/ title="Job Cluster 模式部署" class=dd-item><a href=/bigdata-ai/flink/job-cluster/>Job Cluster 模式部署
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/bigdata-ai/flink/native-kubernetes/ title="Native Kubernetes 模式部署" class=dd-item><a href=/bigdata-ai/flink/native-kubernetes/>Native Kubernetes 模式部署
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/bigdata-ai/flink/ title="Flink on TKE/EKS" class=dd-item><a href=/bigdata-ai/flink/>Flink on TKE/EKS
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/bigdata-ai/spark/ title="Spark on TKE/EKS" class=dd-item><a href=/bigdata-ai/spark/>Spark on TKE/EKS
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/bigdata-ai/tensorflow/ title="TensorFlow on TKE/EKS" class=dd-item><a href=/bigdata-ai/tensorflow/>TensorFlow on TKE/EKS
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/faq/ title=FAQ class="dd-item
+parent"><a href=/faq/>FAQ
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/faq/eks/ title="EKS 常见问题" class="dd-item active"><a href=/faq/eks/>EKS 常见问题
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/faq/tke/ title="TKE 常见问题" class=dd-item><a href=/faq/tke/>TKE 常见问题
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/faq/registry/ title=镜像仓库常见问题 class=dd-item><a href=/faq/registry/>镜像仓库常见问题
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/serverless/ title=Serverless class=dd-item><a href=/serverless/>Serverless
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/mesh/ title="Servie Mesh" class=dd-item><a href=/mesh/>Servie Mesh
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/containerization/ title=业务容器化 class=dd-item><a href=/containerization/>业务容器化
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/containerization/source-ip/ title="获取源 IP" class=dd-item><a href=/containerization/source-ip/>获取源 IP
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/containerization/fixed-ip/ title="固定 IP" class=dd-item><a href=/containerization/fixed-ip/>固定 IP
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/containerization/srpingcloud/ title="Spring Cloud" class=dd-item><a href=/containerization/srpingcloud/>Spring Cloud
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/containerization/dubbo/ title=Dubbo class=dd-item><a href=/containerization/dubbo/>Dubbo
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/security/ title=安全管控 class=dd-item><a href=/security/>安全管控
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/security/audit/ title=审计管理 class=dd-item><a href=/security/audit/>审计管理
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/security/app/ title=应用权限管理 class=dd-item><a href=/security/app/>应用权限管理
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/security/user/ title=用户权限管理 class=dd-item><a href=/security/user/>用户权限管理
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/damn/ title=避坑指南 class=dd-item><a href=/damn/>避坑指南
+<i class="fas fa-check read-icon"></i></a></li></ul><section id=prefooter><hr><ul><li><a class=padding><i class="fas fa-language fa-fw"></i><div class=select-style><select id=select-language onchange="location=this.value;">
+<option id=zh value=https://book.kubetencent.io/faq/eks/ selected>简体中文</option></select><svg id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="255" height="255" viewBox="0 0 255 255" style="enable-background:new 0 0 255 255"><g><g id="arrow-drop-down"><polygon points="0,63.75 127.5,191.25 255,63.75" /></g></g></svg></div></a></li><li><a class=padding href=# data-clear-history-toggle><i class="fas fa-history fa-fw"></i>清理历史记录</a></li></ul></section><section id=footer><center><a class=github-button href=https://github.com/TencentCloudContainerTeam/book data-icon=octicon-star data-show-count=true aria-label="Star imroc/kubernetes-practice-guide on GitHub">Star</a>
+<a class=github-button href=https://github.com/TencentCloudContainerTeam/book/fork data-icon=octicon-repo-forked data-show-count=true aria-label="Fork TencentCloudContainerTeam/book on GitHub">Fork</a></center>
+<script async defer src=https://buttons.github.io/buttons.js></script></section></div></nav><section id=body><div id=overlay></div><div class="padding highlightable"><div><div id=top-bar><div id=top-github-link><a class=github-link title=编辑当前页 href=https://github.com/TencentCloudContainerTeam/book/edit/master/content/zh/faq/eks.md target=blank><i class="fas fa-code-branch"></i><span id=top-github-link-text>编辑当前页</span></a></div><div id=breadcrumbs itemscope itemtype=http://data-vocabulary.org/Breadcrumb><span id=sidebar-toggle-span><a href=# id=sidebar-toggle data-sidebar-toggle><i class="fas fa-bars"></i></a></span><span id=toc-menu><i class="fas fa-list-alt"></i></span><span class=links><a href=/>腾讯云容器服务指南</a> > <a href=/faq/>FAQ</a> > EKS 常见问题</span></div><div class=progress><div class=wrapper><nav id=TableOfContents><ul><li><ul><li><ul><li><ul><li><a href=#eks-支持-hostpath-吗>EKS 支持 hostPath 吗</a></li><li><a href=#eks-支持-kubectl-exec--it-来登录容器吗>EKS 支持 kubectl exec -it 来登录容器吗</a></li><li><a href=#eks-如何让所有-pod-时区保持一致>EKS 如何让所有 pod 时区保持一致</a></li><li><a href=#eks-支持从自定义镜像仓库中拉去镜像么>EKS 支持从自定义镜像仓库中拉去镜像么</a></li><li><a href=#eks-如何收集容器日志>EKS 如何收集容器日志</a></li><li><a href=#eks-如何正确创建-service>EKS 如何正确创建 service</a></li></ul></li></ul></li></ul></li></ul></nav></div></div></div></div><div id=head-tags></div><div id=body-inner><h1>EKS 常见问题</h1><div class="notices info"><p>文档当前状态：Alpha</p></div><h5 id=eks-支持-hostpath-吗>EKS 支持 hostPath 吗</h5><p>不支持。serverless，没有 node，也就没有 hostPath</p><h5 id=eks-支持-kubectl-exec--it-来登录容器吗>EKS 支持 kubectl exec -it 来登录容器吗</h5><p>在灰度，需要开白名单，请提工单或联系售后开白。</p><h5 id=eks-如何让所有-pod-时区保持一致>EKS 如何让所有 pod 时区保持一致</h5><p>由于不支持 hostPath，所以不能用此方法来挂载时区文件，可以通过挂载 configmap 来实现。</p><p>先通过时区文件创建 configmap:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>kubectl create cm timezone-configmap --from-file<span style=color:#f92672>=</span>/usr/share/zoneinfo/Asia/Shanghai
+</code></pre></div><p>再在 pod 里挂载 configmap:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#66d9ef>apiVersion</span>: v1
+<span style=color:#66d9ef>kind</span>: Pod
+<span style=color:#66d9ef>metadata</span>:
+  <span style=color:#66d9ef>name</span>: tz-configmap
+  <span style=color:#66d9ef>namespace</span>: default
+  <span style=color:#66d9ef>annotations</span>:
+    <span style=color:#66d9ef>eks.tke.cloud.tencent.com/cpu</span>: <span style=color:#e6db74>&#34;1&#34;</span>
+    <span style=color:#66d9ef>eks.tke.cloud.tencent.com/mem</span>: 2Gi
+<span style=color:#66d9ef>spec</span>:
+  <span style=color:#66d9ef>restartPolicy</span>: OnFailure
+  <span style=color:#66d9ef>containers</span>:
+  - <span style=color:#66d9ef>name</span>: busy-box-test
+    <span style=color:#66d9ef>env</span>:
+    - <span style=color:#66d9ef>name</span>: TZ
+      <span style=color:#66d9ef>value</span>: Asia/Shanghai
+    <span style=color:#66d9ef>image</span>: busybox
+    <span style=color:#66d9ef>imagePullPolicy</span>: IfNotPresent
+    <span style=color:#66d9ef>command</span>: [<span style=color:#e6db74>&#34;sleep&#34;</span>, <span style=color:#e6db74>&#34;60000&#34;</span>]
+    <span style=color:#66d9ef>volumeMounts</span>:
+    - <span style=color:#66d9ef>name</span>: timezone
+      <span style=color:#66d9ef>mountPath</span>: /etc/localtimeX
+      <span style=color:#66d9ef>subPath</span>: Shanghai
+  <span style=color:#66d9ef>volumes</span>:
+  - <span style=color:#66d9ef>configMap</span>:
+      <span style=color:#66d9ef>name</span>: timezone-configmap
+      <span style=color:#66d9ef>items</span>:
+      - <span style=color:#66d9ef>key</span>: Shanghai
+        <span style=color:#66d9ef>path</span>: Shanghai
+    <span style=color:#66d9ef>name</span>: timezone
+</code></pre></div><blockquote><p>注: 由于 configmap 是 namespace 隔离的，如果要所有 pod 都时区同步，需要在所有 namespace 都创建时区的 configmap</p></blockquote><h5 id=eks-支持从自定义镜像仓库中拉去镜像么>EKS 支持从自定义镜像仓库中拉去镜像么</h5><p>目前还不支持。
+EKS 现在只能从腾讯云官方镜像仓库CCR <a href="https://console.cloud.tencent.com/tke2/registry/user?rid=1">https://console.cloud.tencent.com/tke2/registry/user?rid=1</a> 及 TCR <a href=https://console.cloud.tencent.com/tcr>https://console.cloud.tencent.com/tcr</a>
+中拉去镜像。可以考虑将自己的镜像仓库迁移到腾讯云CCR/TCR; Harbor 可以直接同步镜像到CCR/TCR 。</p><h5 id=eks-如何收集容器日志>EKS 如何收集容器日志</h5><p>EKS日志功能主要通过下面的环境变量来控制，如不加下面环境变量，则不收集日志。</p><ul><li>name: EKS_LOGS_OUTPUT_TYPE 日志收集到哪里，目前支持kafka, cls（腾讯云日志服务）
+value: kafka</li><li>name: EKS_LOGS_KAFKA_HOST kafka host； 如果多个host ，用分号隔开
+value: 10.0.16.42</li><li>name: EKS_LOGS_KAFKA_PORT kafka port
+value: &ldquo;9092&rdquo;</li><li>name: EKS_LOGS_KAFKA_TOPIC kafka topic
+value: eks</li><li>name: EKS_LOGS_METADATA_ON 是否收集 eks 的metadata 信息
+value: &ldquo;true&rdquo;</li><li>name: EKS_LOGS_LOG_PATHS 支持收集标准输出和 文件路径； 如同时收集，用分开隔开；
+value: stdout;/tmp/busy*.log</li></ul><p>参考下面demo</p><pre><code>apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: &quot;1&quot;
+  labels:
+    k8s-app: kafka
+    qcloud-app: kafka
+  name: kafka
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: kafka
+      qcloud-app: kafka
+  template:
+    metadata:
+      annotations:
+        eks.tke.cloud.tencent.com/cpu: &quot;0.25&quot;
+        eks.tke.cloud.tencent.com/mem: &quot;0.5Gi&quot;
+      labels:
+        k8s-app: kafka
+        qcloud-app: kafka
+    spec:
+      containers:
+      - env:
+        - name: EKS_LOGS_OUTPUT_TYPE
+          value: kafka
+        - name: EKS_LOGS_KAFKA_HOST
+          value: 10.0.16.42
+        - name: EKS_LOGS_KAFKA_PORT
+          value: &quot;9092&quot;
+        - name: EKS_LOGS_KAFKA_TOPIC
+          value: eks
+        - name: EKS_LOGS_METADATA_ON
+          value: &quot;false&quot;
+        - name: EKS_LOGS_LOG_PATHS
+          value: stdout;/tmp/busy*.log
+        image: busybox:latest
+        command: [&quot;/bin/sh&quot;]
+        args: [&quot;-c&quot;, &quot;while true; do echo hello world; date; echo hello &gt;&gt; /tmp/busy.log; sleep 1; done&quot;]
+        imagePullPolicy: Always
+        name: while
+        resources:
+          requests:
+            cpu: 250m
+            memory: 512Mi
+</code></pre><h5 id=eks-如何正确创建-service>EKS 如何正确创建 service</h5><p>service 已支持以下类型的service</p><ul><li>ClusterIP 用于同一集群内的其他服务或容器访问，支持TCP/UDP协议，支持设置ClientIP: none（headless service）</li><li>Loadbalancer 用于集群外的服务访问，支持TCP/UDP协议</li></ul><p>注意: VPC内网访问 需要设置如下的annotation: service.kubernetes.io/qcloud-loadbalancer-internal-subnetid: subnet-xxxxxx</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#75715e># loadbalancer</span>
+
+<span style=color:#66d9ef>apiVersion</span>: v1
+<span style=color:#66d9ef>kind</span>: Service
+<span style=color:#66d9ef>metadata</span>:
+  <span style=color:#66d9ef>annotations</span>:
+    <span style=color:#66d9ef>service.kubernetes.io/qcloud-loadbalancer-internal-subnetid</span>: subnet-xxxxxx <span style=color:#75715e># vpc内网访问</span>
+  <span style=color:#66d9ef>name</span>: test
+  <span style=color:#66d9ef>namespace</span>: default
+<span style=color:#66d9ef>spec</span>:
+  <span style=color:#66d9ef>externalTrafficPolicy</span>: Cluster
+  <span style=color:#66d9ef>ports</span>:
+  - <span style=color:#66d9ef>name</span>: tcp<span style=color:#ae81ff>-80-80</span>
+    <span style=color:#66d9ef>nodePort</span>: <span style=color:#ae81ff>31688</span>
+    <span style=color:#66d9ef>port</span>: <span style=color:#ae81ff>80</span>
+    <span style=color:#66d9ef>protocol</span>: TCP
+    <span style=color:#66d9ef>targetPort</span>: <span style=color:#ae81ff>80</span>
+  <span style=color:#66d9ef>sessionAffinity</span>: None
+  <span style=color:#66d9ef>type</span>: LoadBalancer
+
+---
+<span style=color:#75715e># ClusterIP service</span>
+
+<span style=color:#66d9ef>apiVersion</span>: v1
+<span style=color:#66d9ef>kind</span>: Service
+<span style=color:#66d9ef>metadata</span>:
+  <span style=color:#66d9ef>name</span>: nginx
+  <span style=color:#66d9ef>namespace</span>: default
+<span style=color:#66d9ef>spec</span>:
+  <span style=color:#66d9ef>ports</span>:
+  - <span style=color:#66d9ef>name</span>: tcp<span style=color:#ae81ff>-80-80</span>
+    <span style=color:#66d9ef>port</span>: <span style=color:#ae81ff>80</span>
+    <span style=color:#66d9ef>protocol</span>: TCP
+    <span style=color:#66d9ef>targetPort</span>: <span style=color:#ae81ff>80</span>
+  <span style=color:#66d9ef>selector</span>:
+    <span style=color:#66d9ef>k8s-app</span>: nginx
+    <span style=color:#66d9ef>qcloud-app</span>: nginx
+  <span style=color:#66d9ef>sessionAffinity</span>: None
+  <span style=color:#66d9ef>type</span>: ClusterIP
+
+---
+<span style=color:#75715e># headless service</span>
+
+<span style=color:#66d9ef>apiVersion</span>: v1
+<span style=color:#66d9ef>kind</span>: Service
+<span style=color:#66d9ef>metadata</span>:
+  <span style=color:#66d9ef>name</span>: nginx-headless
+  <span style=color:#66d9ef>namespace</span>: default
+<span style=color:#66d9ef>spec</span>:
+  <span style=color:#66d9ef>clusterIP</span>: None
+  <span style=color:#66d9ef>ports</span>:
+  - <span style=color:#66d9ef>name</span>: tcp<span style=color:#ae81ff>-80-80</span>
+    <span style=color:#66d9ef>port</span>: <span style=color:#ae81ff>80</span>
+    <span style=color:#66d9ef>protocol</span>: TCP
+    <span style=color:#66d9ef>targetPort</span>: <span style=color:#ae81ff>80</span>
+  <span style=color:#66d9ef>selector</span>:
+    <span style=color:#66d9ef>k8s-app</span>: nginx
+    <span style=color:#66d9ef>qcloud-app</span>: nginx
+  <span style=color:#66d9ef>sessionAffinity</span>: None
+  <span style=color:#66d9ef>type</span>: ClusterIP
+</code></pre></div><footer class=footline></footer></div><div id=gitalk-container></div><link rel=stylesheet href=https://unpkg.com/gitalk/dist/gitalk.css><script src=https://unpkg.com/gitalk/dist/gitalk.min.js></script><script>console.log("gitalk id:bb993d66c2d8c701b563704cdee17a6d")
+var gitalk=new Gitalk({clientID:'4e9444088ec088b58f37',clientSecret:'b8faa4be9753a13d0b01ccdf4ccc015f9983b58c',repo:'book',owner:'TencentCloudContainerTeam',admin:["imroc","coderwangke","willbern"],labels:['Gitalk'],title:'EKS 常见问题',createIssueManually:false,id:'bb993d66c2d8c701b563704cdee17a6d',distractionFreeMode:true});gitalk.render('gitalk-container');</script></div><div id=navigation><a class="nav nav-prev" href=/faq/ title=FAQ><i class="fa fa-chevron-left"></i></a><a class="nav nav-next" href=/faq/tke/ title="TKE 常见问题" style=margin-right:0><i class="fa fa-chevron-right"></i></a></div></section><div style=left:-1000px;overflow:scroll;position:absolute;top:-1000px;border:none;box-sizing:content-box;height:200px;margin:0;padding:0;width:200px><div style=border:none;box-sizing:content-box;height:200px;margin:0;padding:0;width:200px></div></div></body></html>
